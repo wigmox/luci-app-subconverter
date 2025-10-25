@@ -19,7 +19,7 @@ a control panel for subweb and subconverter
 ## Features
 
 * Supports amd64 and arm64 devices
-* Tested on official OpenWRT 23.05.5/24.10.2 and LEDE R23.4.1/R20.4.8
+* Tested on official OpenWRT 23.05.5/24.10.4 and LEDE R23.4.1/R20.4.8
 
 ## System Requirements
 
@@ -35,15 +35,8 @@ a control panel for subweb and subconverter
 
 [UPX 4.2.4](https://github.com/upx/upx/releases/tag/v4.2.4)
 <br>
-[asdlokj1qpi233/subconverter](https://github.com/asdlokj1qpi233/subconverter/actions/runs/15059868366)
-```powershell
+[asdlokj1qpi233/subconverter](https://github.com/asdlokj1qpi233/subconverter/actions/runs/17318035053)
+```bash
 ./upx -9 --lzma ./subconverter
 ```
 <br>
-
-## Todo List
-
-* ~Optimize disk usage further~
-* Add password protection for enhanced security
-* ~Implement configuration editing capabilities~
-* ~Add crontab to schedule start and stop~
