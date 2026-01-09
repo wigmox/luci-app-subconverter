@@ -1,0 +1,59 @@
+msgid "Subconverter"
+msgstr "订阅转换"
+
+msgid "pref.ini"
+msgstr "配置文件"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "running"
+msgstr "运行中"
+
+msgid "stopped"
+msgstr "已停止"
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Schedule"
+msgstr "计划任务"
+
+msgid "Scheduled Time"
+msgstr "定时执行时间"
+
+msgid "Select Time"
+msgstr "选择时间"
+
+msgid "Service Port"
+msgstr "服务端口"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Start"
+msgstr "启动"
+
+msgid "Stop"
+msgstr "停止"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "document"
+msgstr "帮助文档"
+
+msgid "source code"
+msgstr "源代码"
+
+msgid "luci-app-subconverter is a control panel for"
+msgstr "luci-app-subconverter 是 Subconverter 的控制面板"
+
+msgid "and"
+msgstr "与"
+
+msgid "this is the configuration for subconverter, located in \"/etc/subconverter/pref.ini\", only for advanced user."
+msgstr "这是 Subconverter 的配置文件，位于 \"/etc/subconverter/pref.ini\"，仅供高级用户使用。"

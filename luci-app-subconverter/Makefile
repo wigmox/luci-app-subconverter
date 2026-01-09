@@ -39,6 +39,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/subconverter
 	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 
 	$(CP) -r $(TOPDIR)/package/$(PKG_NAME)/* $(PKG_BUILD_DIR)/
 
@@ -51,4 +52,5 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/root/etc/init.d/subconverter $(1)/etc/init.d/
 endef
 
+include $(TOPDIR)/feeds/luci/luci.mk
 $(eval $(call BuildPackage,$(PKG_NAME)))

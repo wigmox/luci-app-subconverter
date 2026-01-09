@@ -75,7 +75,7 @@ end
 if luci.http.formvalue("settings") then
   if luci.http.formvalue("enable") == "on" then
     if luci.http.formvalue("schedule") == "on" then
-      scheduled_time = VALID_HOURS[luci.http.formvalue("schedule-selection")]
+      local scheduled_time = VALID_HOURS[luci.http.formvalue("schedule-selection")]
       if scheduled_time ~= nil then 
         stop_service()
         update_scheduled_time(scheduled_time)
@@ -97,31 +97,39 @@ end
 %>
 <%+header%>
 <style>
-  span.running { color: green; }
-  span.stopped { color: red; }
+  span.running { color: green; font-weight: bold; }
+  span.stopped { color: red; font-weight: bold; }
 </style>
 <div>
-  <h2><a id="subconverter" target="_blank">Subconverter</a></h2>
-  <div class="cbi-map-descr">luci-app-subconverter is a control panel for <a target="_blank" href="https://github.com/stilleshan/subweb">subweb</a> and <a target="_blank" href="https://github.com/asdlokj1qpi233/subconverter">subconverter</a>. <a target="_blank" href="https://github.com/0x2196f3/luci-app-subconverter">source code</a></div>
+  <h2><a id="subconverter" target="_blank"><%:Subconverter%></a></h2>
+  <div class="cbi-map-descr">
+    <%:luci-app-subconverter is a control panel for%> 
+    <a target="_blank" href="https://github.com/stilleshan/subweb">subweb</a> 
+    <%:and%> 
+    <a target="_blank" href="https://github.com/asdlokj1qpi233/subconverter">subconverter</a>. 
+    <a target="_blank" href="https://github.com/0x2196f3/luci-app-subconverter"><%:source code%></a>
+  </div>
+
   <form method="POST">
     <input type="hidden" name="settings" value="on">
     <div class="cbi-value">
-      <label class="cbi-value-title">Status</label>
-      <span id="service-status" ></span>
+      <label class="cbi-value-title"><%:Status%></label>
+      <span id="service-status" class="cbi-value-field"></span>
     </div>
     <div class="cbi-checkbox cbi-value">
-      <label for="checkbox-enable" class="cbi-value-title">Enable</label>
+      <label for="checkbox-enable" class="cbi-value-title"><%:Enable%></label>
       <input type="checkbox" id="checkbox-enable" name="enable" class="cbi-value-field" />
     </div>
+
     <div class="cbi-checkbox cbi-value" id="container-checkbox-schedule" style="display: none">
-      <label for="checkbox-schedule" class="cbi-value-title">Schedule</label>
+      <label for="checkbox-schedule" class="cbi-value-title"><%:Schedule%></label>
       <input type="checkbox" id="checkbox-schedule" name="schedule" class="cbi-value-field" />
     </div>  
     <div class="cbi-value" id="container-schedule" style="display: none">
-      <label for="select-schedule" class="cbi-value-title">Scheduled Time</label>
+      <label for="select-schedule" class="cbi-value-title"><%:Scheduled Time%></label>
       <div class="cbi-value-field">
         <select id="select-schedule" name="schedule-selection" class="cbi-input-select">
-          <option value="-1">Select Time</option>
+          <option value="-1"><%:Select Time%></option>
           <script>
             var select = document.getElementById('select-schedule');
             for (var i = 0; i < 24; i++) {
@@ -135,19 +143,25 @@ end
       </div>
     </div>
     <div class="cbi-value">
-      <label for="input-port" class="cbi-value-title">Service Port</label>
+      <label for="input-port" class="cbi-value-title"><%:Service Port%></label>
 		  <div class="cbi-value-field">
 	      <input id="input-port" name="port" type="number" min="1" max="65535" class="cbi-input-text">
       </div>
     </div>
     <div class="cbi-page-actions">
-      <input class="cbi-button cbi-button-apply important" type="submit" value="Apply"/>
-      <button class="cbi-button cbi-button-save" onclick="location.href='?start'; return false;"><i class="icon-play"></i>Start</button>
-      <button class="cbi-button cbi-button-reset" onclick="location.href='?stop'; return false;"><i class="icon-stop"></i>Stop</button>
+      <input class="cbi-button cbi-button-apply important" type="submit" value="<%:Apply%>"/>
+      <button class="cbi-button cbi-button-save" onclick="location.href='?start'; return false;"><i class="icon-play"></i> <%:Start%></button>
+      <button class="cbi-button cbi-button-reset" onclick="location.href='?stop'; return false;"><i class="icon-stop"></i> <%:Stop%></button>
     </div>
   </form>
 </div>
 <script>
+  // JavaScript 翻译映射表，与 .po 文件中的词条对应
+  const i18n_map = {
+    "running": "<%:running%>",
+    "stopped": "<%:stopped%>"
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
     const checkboxEnable = document.getElementById('checkbox-enable');
     const containerCheckboxSchedule = document.getElementById('container-checkbox-schedule');
@@ -173,9 +187,9 @@ end
       .then(data => {
           const statusElement = document.getElementById('service-status');
           statusElement.className = data + " cbi-value-field";
-          statusElement.innerText = data;
+          statusElement.innerText = i18n_map[data] || data;
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error fetching status:', error));
   }
   function update_data() {
     fetch('?data')
@@ -191,21 +205,21 @@ end
           const checkboxSchedule = document.getElementById('checkbox-schedule');
 
           statusElement.className = status + " cbi-value-field";
-          statusElement.innerText = status;
+          statusElement.innerText = i18n_map[status] || status;
           
           document.getElementById('subconverter').href = window.location.protocol + '//' + window.location.hostname + ':' + port;
           document.getElementById('input-port').value = port;
           
-          if (enabled == "enabled" || scheduledTime !== 'nil') {
+          if (enabled == "enabled" || (scheduledTime !== 'nil' && scheduledTime !== 'null')) {
             checkboxEnable.checked = true;
           }
-          if (scheduledTime !== 'nil') {
+          if (scheduledTime !== 'nil' && scheduledTime !== 'null') {
             checkboxSchedule.checked = true;
             document.getElementById("select-schedule").value = scheduledTime;
           }
           checkboxEnable.dispatchEvent(new Event('change'));
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error fetching data:', error));
   }
   setTimeout(update_data, 200);
   setTimeout(update_status, 2000);
