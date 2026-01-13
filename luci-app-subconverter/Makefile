@@ -36,7 +36,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DATA) ./luasrc/controller/subconverter.lua $(1)/usr/lib/lua/luci/controller/
 	$(CP) ./luasrc/view/subconverter/*.htm $(1)/usr/lib/lua/luci/view/subconverter/
 	# 如果有语言包文件，请取消下面行的注释
-	# $(CP) ./luasrc/i18n/*.lmo $(1)/usr/lib/lua/luci/i18n/ 2>/dev/null || true
+	$(CP) ./luasrc/i18n/*.lmo $(1)/usr/lib/lua/luci/i18n/ 2>/dev/null || true
 
 	# 2. 安装二进制文件和配置 (关键修复：直接在打包阶段赋予执行权限)
 	if [ -d "./root/etc/subconverter" ]; then \
