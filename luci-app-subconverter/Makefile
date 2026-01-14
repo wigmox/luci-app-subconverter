@@ -30,3 +30,4 @@ exit 0
 endef
 
 # call BuildPackage - OpenWrt buildroot signature
+$(eval $(call BuildPackage,$(PKG_NAME)))
