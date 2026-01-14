@@ -8,7 +8,7 @@ LUCI_TITLE:=Subconverter LuCI Interface
 LUCI_DEPENDS:=+luci-base +luci-compat
 LUCI_PKGARCH:=all
 
-include ../../luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # 安装后脚本
 define Package/luci-app-subconverter/postinst
@@ -30,4 +30,3 @@ exit 0
 endef
 
 # call BuildPackage - OpenWrt buildroot signature
-$(eval $(call BuildPackage,$(PKG_NAME)))
