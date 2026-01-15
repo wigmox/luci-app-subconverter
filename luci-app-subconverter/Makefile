@@ -11,20 +11,19 @@ LUCI_PKGARCH:=all
 include $(TOPDIR)/feeds/luci/luci.mk
 
 # 安装后脚本
-define Package/luci-app-subconverter/postinst
-#!/bin/sh
-if [ -z "${IPKG_INSTROOT}" ]; then
-	/etc/init.d/subconverter enable >/dev/null 2>&1
-fi
-exit 0
+define Package/$(PKG_NAME)/postinst
+    #!/bin/sh
+    chmod 755 /etc/subconverter/subconverter
+    chmod 755 /etc/init.d/subconverter
 endef
 
 # 卸载前脚本
-define Package/luci-app-subconverter/prerm
+define Package/$(PKG_NAME)/prerm
 #!/bin/sh
 if [ -z "${IPKG_INSTROOT}" ]; then
-	/etc/init.d/subconverter stop >/dev/null 2>&1
-	/etc/init.d/subconverter disable >/dev/null 2>&1
+    crontab -l | grep -v '/etc/init.d/subconverter' | crontab -
+    killall -q /etc/subconverter/subconverter
+    rm -rf /etc/subconverter
 fi
 exit 0
 endef
