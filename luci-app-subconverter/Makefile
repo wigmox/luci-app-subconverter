@@ -13,8 +13,12 @@ include $(TOPDIR)/feeds/luci/luci.mk
 # 安装后脚本
 define Package/$(PKG_NAME)/postinst
     #!/bin/sh
-    chmod 755 /etc/subconverter/subconverter
-    chmod 755 /etc/init.d/subconverter
+    # 只在实际安装时执行权限设置，跳过构建过程
+if [ -z "${IPKG_INSTROOT}" ] ; then
+        chmod 755 /etc/subconverter/subconverter
+        chmod 755 /etc/init.d/subconverter
+fi
+exit 0
 endef
 
 # 卸载前脚本
